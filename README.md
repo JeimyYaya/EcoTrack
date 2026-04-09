@@ -19,7 +19,8 @@ Se definió la visión general del proyecto mediante el siguiente prompt:
 * Enfoque en simplicidad y experiencia de usuario
 
 📸 Evidencia:
-(Insertar captura 1)
+<img width="921" height="652" alt="image" src="https://github.com/user-attachments/assets/fa12c990-fa67-49d7-b86a-fe8b43f68bfd" />
+
 
 ---
 
@@ -32,7 +33,8 @@ Se transformó la interfaz inicial a una experiencia conversacional:
 * Auto-scroll
 
 📸 Evidencia:
-(Insertar captura 2)
+<img width="921" height="537" alt="image" src="https://github.com/user-attachments/assets/5ba92885-e53e-456b-a554-8a870db53c4e" />
+
 
 ---
 
@@ -45,7 +47,8 @@ Se implementó un sistema para interpretar el input del usuario:
 * Conversión a formato estructurado
 
 📸 Evidencia:
-(Insertar captura 3)
+<img width="921" height="456" alt="image" src="https://github.com/user-attachments/assets/bdc91b34-bfd4-47e6-baac-93935d4ecb24" />
+
 
 ---
 
@@ -58,7 +61,8 @@ Se mejoró la lógica de cálculo:
 * Arquitectura modular
 
 📸 Evidencia:
-(Insertar captura 4)
+<img width="921" height="488" alt="image" src="https://github.com/user-attachments/assets/996844cb-ad21-4360-99d5-49edfbf7d173" />
+
 
 ---
 
@@ -71,7 +75,8 @@ Se optimizó la salida del sistema para simular un asistente inteligente:
 * Tono conversacional
 
 📸 Evidencia:
-(Insertar captura 5)
+<img width="921" height="477" alt="image" src="https://github.com/user-attachments/assets/e17ff3d2-e40f-4f3d-8ee1-4ae1d927d493" />
+
 
 ---
 
@@ -83,20 +88,30 @@ El problema consistía en que el sistema no identificaba correctamente algunas a
 
 Para solucionarlo, se utilizó un prompt en Cursor describiendo el problema y solicitando una mejora en la lógica de extracción. La IA propuso una solución basada en patrones y normalización del texto, mejorando la precisión sin necesidad de escribir código manualmente.
 
-Este proceso evidencia el uso de Vibe Coding, donde el desarrollador actúa como orquestador de soluciones en lugar de implementar directamente la lógica.
 
 ---
 
 ## 4. Funcionalidad de IA implementada
 
-La aplicación implementa una funcionalidad de procesamiento de lenguaje natural simulado, que permite:
+**Procesamiento del lenguaje natural**
+Se normaliza el texto y se analiza con reglas y expresiones regulares (sin modelo de lenguaje grande).
+Se detectan números con unidades y frases típicas de transporte, energía o comida.
+No hay comprensión semántica profunda: solo coincidencia de patrones y palabras clave.
 
-* Interpretar texto libre ingresado por el usuario
-* Extraer información estructurada (cantidades y tipos de actividad)
-* Calcular emisiones de CO₂ basadas en esos datos
-* Generar respuestas explicativas y sugerencias
+**Extracción de datos estructurados**
+Se arma un JSON (StructuredFootprint) con actividades: categoría, tipo, cantidad, unidad y texto coincidente.
+Se evita duplicar lo mismo si dos patrones se solapan en el mensaje.
+Así el mensaje en lenguaje natural pasa a datos tabulares antes del cálculo.
 
-Aunque no se utiliza una API de IA real, el sistema simula el comportamiento de un modelo inteligente mediante reglas y procesamiento estructurado, cumpliendo con los objetivos del MVP.
+**Cálculo de CO₂**
+Cada actividad cuantificada se multiplica por un factor de emisión (p. ej. kg CO₂e por kWh o por vehículo·día).
+Lo no cuantificado se completa con reglas por palabras clave y valores “día típico”.
+El total en kg CO₂e es la suma de todas las líneas (con piso en cero si aplica).
+
+**Generación de la respuesta**
+Se muestran total, desglose y, con plantillas según lo detectado, una breve explicación y 1–2 consejos.
+Eso imita el tono de un asistente, pero el texto es determinista, no generado por un LLM.
+En conjunto: reglas + factores + texto fijo sustituyen a una IA conversacional real.
 
 ---
 
