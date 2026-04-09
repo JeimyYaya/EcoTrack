@@ -30,6 +30,10 @@ function EstimateBubble({ result }: { result: EstimateResult }) {
         From structured quantities + keyword matches (kg CO₂-eq, illustrative)
       </p>
 
+      {result.howCalculated ? (
+        <p className="mt-3 text-sm leading-relaxed text-[var(--text)]">{result.howCalculated}</p>
+      ) : null}
+
       <p className="mt-4 font-mono text-3xl font-semibold tabular-nums text-[var(--accent)] sm:text-4xl">
         {result.totalKg.toFixed(1)}
         <span className="ml-2 text-base font-normal text-[var(--muted)] sm:text-lg">kg CO₂-eq</span>
@@ -51,6 +55,19 @@ function EstimateBubble({ result }: { result: EstimateResult }) {
           ))}
         </ul>
       )}
+
+      {result.suggestions.length > 0 ? (
+        <div className="mt-4 border-t border-[var(--border)] pt-4">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--muted)]">
+            Ideas to lower emissions
+          </p>
+          <ul className="mt-2 list-inside list-disc space-y-1.5 text-sm leading-relaxed text-[var(--text)]">
+            {result.suggestions.map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{result.note}</p>
     </div>
