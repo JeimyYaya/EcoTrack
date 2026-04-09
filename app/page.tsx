@@ -8,13 +8,26 @@ type ChatMessage =
   | { id: string; role: "assistant"; result: EstimateResult };
 
 function EstimateBubble({ result }: { result: EstimateResult }) {
+  const hasStructured = result.structured.activities.length > 0;
+
   return (
     <div className="rounded-2xl rounded-tl-md border border-[var(--border)] bg-[var(--surface)]/90 px-4 py-3 shadow-lg shadow-black/15 sm:px-5 sm:py-4">
+      {hasStructured && (
+        <details className="mb-4 rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)]/60 px-3 py-2">
+          <summary className="cursor-pointer select-none text-xs font-medium text-[var(--muted)]">
+            Parsed structure (JSON)
+          </summary>
+          <pre className="mt-2 max-h-40 overflow-auto rounded-lg bg-[var(--bg)]/80 p-2 font-mono text-[11px] leading-relaxed text-[var(--accent)]/95">
+            {JSON.stringify(result.structured, null, 2)}
+          </pre>
+        </details>
+      )}
+
       <p className="text-xs font-medium uppercase tracking-wide text-[var(--muted)]">
         Estimated footprint
       </p>
       <p className="mt-0.5 text-[11px] text-[var(--muted)]/90">
-        Matched categories (kg CO₂-eq / day, illustrative)
+        From structured quantities + keyword matches (kg CO₂-eq, illustrative)
       </p>
 
       <p className="mt-4 font-mono text-3xl font-semibold tabular-nums text-[var(--accent)] sm:text-4xl">
